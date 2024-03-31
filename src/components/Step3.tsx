@@ -58,11 +58,13 @@ const Step3: React.FC<StepProps> = ({ formik }) => {
   };
 
   const handleDeleteDishes = (dish: { id: number; dish: string }, index: number) => {
-    const newDishList = formik.values?.dish_list.filter((item) => item.id !== dish.id);
-    const newTouchedList = formik.touched?.dish_list?.filter((item: { id: number }, idx: number) => idx !== index);
-
+    const newDishList = formik.values?.dish_list?.filter((item) => item.id !== dish.id);
     formik.setFieldValue('dish_list', newDishList);
-    formik.setFieldTouched('dish_list', newTouchedList);
+
+    if (!!formik?.touched?.dish_list) {
+      const newTouchedList = formik?.touched?.dish_list?.filter((item: { id: number }, idx: number) => idx !== index);
+      formik.setFieldTouched('dish_list', newTouchedList);
+    }
   };
 
   return (
